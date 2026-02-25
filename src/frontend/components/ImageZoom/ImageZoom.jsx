@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ImageZoom.module.css';
-import { AiOutlineClose, AiOutlineZoomIn } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineExpand } from 'react-icons/ai';
 
 const ImageZoom = ({ src, alt, className = '' }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const imageRef = useRef(null);
 
   const handleImageClick = () => {
@@ -16,6 +17,7 @@ const ImageZoom = ({ src, alt, className = '' }) => {
   const handleClose = () => {
     setIsZoomed(false);
     setIsLoading(false);
+    setImageLoaded(false);
   };
 
   const handleKeyDown = (e) => {
@@ -26,6 +28,7 @@ const ImageZoom = ({ src, alt, className = '' }) => {
 
   const handleImageLoad = () => {
     setIsLoading(false);
+    setImageLoaded(true);
   };
 
   useEffect(() => {
@@ -55,21 +58,21 @@ const ImageZoom = ({ src, alt, className = '' }) => {
         </button>
         
         {isLoading && (
-          <div className={styles.loadingSpinner}>
-            <div className={styles.spinner}></div>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingSpinner}></div>
           </div>
         )}
         
         <img
           src={src}
           alt={alt}
-          className={`${styles.zoomedImage} ${isLoading ? styles.loading : ''}`}
+          className={`${styles.zoomedImage} ${imageLoaded ? styles.loaded : ''}`}
           onClick={(e) => e.stopPropagation()}
           onLoad={handleImageLoad}
         />
         
-        <div className={styles.zoomHint}>
-          <p>Presiona ESC o haz clic fuera de la imagen para cerrar</p>
+        <div className={styles.imageInfo}>
+          <p>Usa la rueda del mouse para hacer zoom • Arrastra para mover</p>
         </div>
       </div>
     </div>
@@ -85,11 +88,11 @@ const ImageZoom = ({ src, alt, className = '' }) => {
           className={styles.productImage}
           onClick={handleImageClick}
         />
-        <div className={styles.zoomIcon}>
-          <AiOutlineZoomIn />
-        </div>
-        <div className={styles.zoomHintOverlay}>
-          <span>Haz clic para ampliar</span>
+        <div className={styles.zoomOverlayHover}>
+          <div className={styles.zoomIcon}>
+            <AiOutlineExpand />
+          </div>
+          <div className={styles.zoomText}>Ver en tamaño completo</div>
         </div>
       </div>
       
