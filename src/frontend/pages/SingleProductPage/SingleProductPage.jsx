@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getSingleProductService } from '../../Services/services';
 import styles from './SingleProductPage.module.css';
-import { Error, Price } from '../../components';
+import { Error, Price, ImageZoom } from '../../components';
 import {
   LOGIN_TOAST,
   calculateDiscountPercent,
@@ -158,9 +158,11 @@ const SingleProductPage = () => {
 
   return (
     <main className={`container half-page ${styles.productPageCenter}`}>
-      <div className={styles.imageContainer}>
-        <img src={image} alt={name} />
-      </div>
+      <ImageZoom 
+        src={image} 
+        alt={name} 
+        className={styles.imageContainer}
+      />
 
       <div className={styles.productContent}>
         <h3 className='primary-color-text'>{name}</h3>

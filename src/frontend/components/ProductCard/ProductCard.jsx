@@ -7,6 +7,7 @@ import {
 import styles from './ProductCard.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Price from '../Price';
+import ImageZoom from '../ImageZoom/ImageZoom';
 import {
   LOGIN_TOAST,
   calculateDiscountPercent,
@@ -131,11 +132,9 @@ const ProductCard = ({ product }) => {
           : `${styles.productStyle} ${styles.disabledProduct}`
       }
     >
-      <div className={styles.imgContainer}>
-        <Link to={`/products/${product._id}`}>
-          <img src={product.image} alt={product.name} />
-        </Link>
-      </div>
+      <Link to={`/products/${product._id}`} className={styles.imgContainer}>
+        <img src={product.image} alt={product.name} />
+      </Link>
 
       <button
         onClick={handleWishlistBtnClick}
